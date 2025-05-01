@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DodajComponent } from './dodaj.component';
+import { DomovComponent } from './domov.component';
 
-
-
-describe('DodajComponent', () => {
-  let component: DodajComponent;
-  let fixture: ComponentFixture<DodajComponent>;
+describe('DomovComponent', () => {
+  let component: DomovComponent;
+  let fixture: ComponentFixture<DomovComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DodajComponent]
+      imports: [DomovComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DodajComponent);
+    fixture = TestBed.createComponent(DomovComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
