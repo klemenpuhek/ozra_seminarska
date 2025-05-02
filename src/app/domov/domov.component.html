@@ -1,55 +1,26 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <!-- First Card -->
-      <div class="col-md-4">
-        <div class="card shadow">
-          <div class="image-container">
-            <img src="slike/pizza_margherita.jpg" alt="Pizza Margherita" class="card-img-top">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Pizza Margherita</h5>
-            <div class="btn-group d-flex justify-content-between mb-3">
-              <a routerLink="/recept" class="btn btn-recept">Prikaži cel recept</a>
-              <a routerLink="/uredi" class="btn btn-uredi">Uredi recept</a>
-              <a routerLink="/" class="btn btn-zbrisi">Zbriši recept</a>
-            </div>
-          </div>
+  <div class="row justify-content-center">
+    <div *ngFor="let recipe of recipes" class="col-md-4 mb-4">
+      <div class="card shadow">
+        <div class="image-container">
+          <!-- Show the recipe image if available, otherwise use a default image -->
+          <img [src]="recipe.slika ? 'http://localhost:3000' + recipe.slika : 'assets/default-image.jpg'" 
+               alt="{{ recipe.imeRecepta }}" 
+               class="card-img-top" 
+               (load)="imageLoaded()">
         </div>
-      </div>
-  
-      <!-- Second Card -->
-      <div class="col-md-4">
-        <div class="card shadow">
-          <div class="image-container">
-            <img src="slike/spageti_bolognese.jpeg" alt="Špageti Bolognese" class="card-img-top">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Špageti Bolognese</h5>
-            <div class="btn-group d-flex justify-content-between mb-3">
-              <a routerLink="/recept" class="btn btn-recept">Prikaži cel recept</a>
-              <a routerLink="/uredi" class="btn btn-uredi">Uredi recept</a>
-              <a routerLink="/" class="btn btn-zbrisi">Zbriši recept</a>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Third Card -->
-      <div class="col-md-4">
-        <div class="card shadow">
-          <div class="image-container">
-            <img src="slike/cezarjeva_solata.jpg" alt="Cezarjeva Solata" class="card-img-top">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Cezarjeva Solata</h5>
-            <div class="btn-group d-flex justify-content-between mb-3">
-              <a routerLink="/recept" class="btn btn-recept">Prikaži cel recept</a>
-              <a routerLink="/uredi" class="btn btn-uredi">Uredi recept</a>
-              <a routerLink="/" class="btn btn-zbrisi">Zbriši recept</a>
-            </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.imeRecepta }}</h5>
+          <div class="btn-group d-flex justify-content-between mb-3">
+            <!-- Link to view full recipe -->
+            <a [routerLink]="['/recepti', recipe.id]" class="btn btn-recept">Prikaži cel recept</a>
+            <!-- Link to edit the recipe -->
+            <a [routerLink]="['/uredi', recipe.id]" class="btn btn-uredi">Uredi recept</a>
+            <!-- Button to delete the recipe -->
+            <button (click)="deleteRecipe(recipe.id)" class="btn btn-zbrisi">Zbriši recept</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
