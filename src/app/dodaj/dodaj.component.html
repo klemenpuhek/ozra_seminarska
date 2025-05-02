@@ -1,49 +1,48 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow custom-card">
-          <div class="card-body">
-            <h4 class="card-title text-center mb-4">Dodaj recept</h4>
-            <form>
-              <div class="form-group mb-3">
-                <label for="imeRecepta">Ime recepta</label>
-                <input type="text" class="form-control" id="imeRecepta">
-              </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow custom-card">
+        <div class="card-body">
+          <h4 class="card-title text-center mb-4">Dodaj recept</h4>
+          <form (submit)="onSubmit($event)" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+              <label for="imeRecepta">Ime recepta</label>
+              <input type="text" class="form-control" id="imeRecepta" required>
+            </div>
 
-              <div class="form-group mb-3">
-                <label for="casPriprave">Čas priprave (v minutah)</label>
-                <input type="number" class="form-control" id="casPriprave" min="1">
-              </div>
+            <div class="form-group mb-3">
+              <label for="casPriprave">Čas priprave (v minutah)</label>
+              <input type="number" class="form-control" id="casPriprave" min="1" required>
+            </div>
 
-              <div class="form-group mb-3">
-                <label for="tezavnost">Težavnost</label>
-                <select class="form-control" id="tezavnost">
-                  <option value="enostavno">Enostavno</option>
-                  <option value="srednje">Srednje</option>
-                  <option value="tezko">Težko</option>
-                </select>
-              </div>
+            <div class="form-group mb-3">
+              <label for="tezavnost">Težavnost</label>
+              <select class="form-control" id="tezavnost" required>
+                <option value="enostavno">Enostavno</option>
+                <option value="srednje">Srednje</option>
+                <option value="tezko">Težko</option>
+              </select>
+            </div>
 
-              <div class="form-group mb-3">
-                <label for="opis">Sestavine</label>
-                <textarea class="form-control" id="opis" rows="3"></textarea>
-              </div>
-  
-              <div class="form-group mb-3">
-                <label for="opis">Opis recepta</label>
-                <textarea class="form-control" id="opis" rows="5"></textarea>
-              </div>
+            <div class="form-group mb-3">
+              <label for="opis">Sestavine</label>
+              <textarea class="form-control" id="opis" rows="3" required></textarea>
+            </div>
 
-              <div class="form-group mb-3">
-                <label for="slika">Slika</label>
-                <input type="file" class="form-control" id="slika" accept="image/*">
-              </div>
-  
-              <button type="submit" class="btn btn-dodaj w-100">Dodaj recept</button>
-            </form>
-          </div>
+            <div class="form-group mb-3">
+              <label for="opis">Opis recepta</label>
+              <textarea class="form-control" id="opis" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="slika">Slika</label>
+              <input type="file" class="form-control" id="slika" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="btn btn-dodaj w-100">Dodaj recept</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

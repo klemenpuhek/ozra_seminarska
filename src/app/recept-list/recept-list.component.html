@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <!-- Loop through the recipes and display them -->
+      <div *ngFor="let recipe of recipes" class="col-md-4 mb-4">
+        <div class="card shadow">
+          <div class="image-container">
+            <!-- Display the recipe image, with a fallback if no image exists -->
+            <img [src]="recipe.slika ? 'http://localhost:3000' + recipe.slika : 'default-image.jpg'" alt="{{ recipe.imeRecepta }}" class="card-img-top">
+          </div>
+          <div class="card-body">
+            <!-- Display recipe name -->
+            <h5 class="card-title">{{ recipe.imeRecepta }}</h5>
+            <div class="btn-group d-flex justify-content-between mb-3">
+                <a [routerLink]="['/recepti', recipe.id]" class="btn btn-recept">Prikaži cel recept</a>
+                <a [routerLink]="['/uredi', recipe.id]" class="btn btn-uredi">Uredi recept</a>
+                <button (click)="deleteRecipe(recipe.id)" class="btn btn-zbrisi">Zbriši recept</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
