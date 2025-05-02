@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-prijava',
-  imports: [RouterModule, CommonModule],
   templateUrl: './prijava.component.html',
   styleUrl: './prijava.component.css'
 })

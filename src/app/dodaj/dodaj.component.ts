@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-dodaj',
-  imports: [],
   templateUrl: './dodaj.component.html',
   styleUrl: './dodaj.component.css'
 })

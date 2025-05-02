@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { DomovComponent } from './domov/domov.component';
 import { DodajComponent } from './dodaj/dodaj.component';
 import { PrijavaComponent } from './prijava/prijava.component';
@@ -11,3 +12,8 @@ export const routes: Routes = [
     {path: 'registracija', component: RegistracijaComponent}
 ];
 
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule { }
