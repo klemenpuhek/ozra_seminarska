@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';  // Import CommonModule for ngFor
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recept-list',
@@ -12,10 +12,14 @@ import { CommonModule } from '@angular/common';  // Import CommonModule for ngFo
 })
 export class ReceptListComponent implements OnInit {
   recipes: any[] = [];  // Declare an array to store the recipes
+  private loggedInStatus: boolean = false;  // Track login status internally
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    // Set the initial login state
+    this.checkLoginStatus();
+
     // Fetch the recipes from the backend API
     this.http.get<any[]>('http://localhost:3000/recepti').subscribe(
       (data) => {
@@ -25,6 +29,15 @@ export class ReceptListComponent implements OnInit {
         console.error('Error fetching recipes:', error);
       }
     );
+  }
+
+  checkLoginStatus(): void {
+    this.loggedInStatus = !!localStorage.getItem('userToken');  // Check login status
+    this.cdr.detectChanges();  // Manually trigger change detection to update the view
+  }
+
+  get isLoggedIn(): boolean {
+    return this.loggedInStatus;  // Return the current login status
   }
 
   deleteRecipe(id: number): void {

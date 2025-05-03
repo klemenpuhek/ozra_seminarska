@@ -1,13 +1,52 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router'; // Import RouterModule for routing
 
 @Component({
   selector: 'app-registracija',
-  imports: [RouterModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule], // Include RouterModule
   templateUrl: './registracija.component.html',
-  styleUrl: './registracija.component.css'
+  styleUrls: ['./registracija.component.css']
 })
 export class RegistracijaComponent {
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  errorMessage: string = '';
+  successMessage: string = '';
 
+  constructor(private http: HttpClient, private router: Router) {}
+
+  register(): void {
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    if (!this.email || !this.password || !this.confirmPassword) {
+      this.errorMessage = 'Prosimo izpolnite vsa polja.';
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Gesli se ne ujemata.';
+      return;
+    }
+
+    const user = { email: this.email, password: this.password };
+
+    this.http.post('http://localhost:3000/register', user).subscribe({
+      next: (response: any) => {
+        this.successMessage = 'Registracija uspešna! Preusmerjanje...';
+        localStorage.setItem('userToken', response.token); // Save the token after registration
+        setTimeout(() => this.router.navigate(['/prijava']), 1500);
+      },
+      error: (error) => {
+        console.error('Full registration error:', error); // ✅ Help debug in console
+        this.errorMessage = error.error?.error || 'Napaka pri registraciji.';
+      }
+    });
+  }
 }

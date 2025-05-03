@@ -1,9 +1,8 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div *ngFor="let recipe of recipes" class="col-md-4 mb-4">
+    <div *ngFor="let recipe of recipes" class="col-md-4 mb-4" @bounceIn>
       <div class="card shadow">
         <div class="image-container">
-          <!-- Show the recipe image if available, otherwise use a default image -->
           <img [src]="recipe.slika ? 'http://localhost:3000' + recipe.slika : 'assets/default-image.jpg'" 
                alt="{{ recipe.imeRecepta }}" 
                class="card-img-top" 
@@ -12,12 +11,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ recipe.imeRecepta }}</h5>
           <div class="btn-group d-flex justify-content-between mb-3">
-            <!-- Link to view full recipe -->
+            <!-- Always show "Prikaži cel recept" -->
             <a [routerLink]="['/recepti', recipe.id]" class="btn btn-recept">Prikaži cel recept</a>
-            <!-- Link to edit the recipe -->
-            <a [routerLink]="['/uredi', recipe.id]" class="btn btn-uredi">Uredi recept</a>
-            <!-- Button to delete the recipe -->
-            <button (click)="deleteRecipe(recipe.id)" class="btn btn-zbrisi">Zbriši recept</button>
+
+            <!-- Only show "Uredi recept" and "Zbriši recept" if the user is logged in -->
+            <a *ngIf="isLoggedIn" [routerLink]="['/uredi', recipe.id]" class="btn btn-uredi">Uredi recept</a>
+            <button *ngIf="isLoggedIn" (click)="deleteRecipe(recipe.id)" class="btn btn-zbrisi">Zbriši recept</button>
           </div>
         </div>
       </div>
