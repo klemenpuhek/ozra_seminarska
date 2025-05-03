@@ -1,31 +1,39 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card shadow">
-          <div class="card-body">
-            <h4 class="card-title text-center mb-4">Registracija</h4>
-            <form>
-              <div class="form-group mb-3">
-                <label for="exampleInputEmail1">Email naslov</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
-              <div class="form-group mb-3">
-                <label for="exampleInputPassword1">Geslo</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-              </div>
-              <div class="form-group mb-3">
-                <label for="exampleInputPassword2">Ponovno vnesite geslo</label>
-                <input type="password" class="form-control" id="exampleInputPassword2">
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Registriraj se</button>
-            </form>
-  
-            <div class="form-group text-center mt-4 mb-3">
-              <a routerLink="/prijava">Že imaš uporabniški račun?</a>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="card-title text-center mb-4">Registracija</h4>
+
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+
+          <form (ngSubmit)="register()">
+            <div class="form-group mb-3">
+              <label for="email">Email naslov</label>
+              <input type="email" [(ngModel)]="email" name="email" class="form-control" required>
             </div>
+            <div class="form-group mb-3">
+              <label for="password">Geslo</label>
+              <input type="password" [(ngModel)]="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirmPassword">Ponovno vnesite geslo</label>
+              <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Registriraj se</button>
+          </form>
+
+          <div class="form-group text-center mt-4 mb-3">
+            <a routerLink="/prijava">Že imaš uporabniški račun?</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

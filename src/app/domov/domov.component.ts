@@ -1,33 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';  // Import CommonModule for ngFor
+import { CommonModule } from '@angular/common';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  keyframes
+} from '@angular/animations';
 
 @Component({
   selector: 'app-domov',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './domov.component.html',
-  styleUrls: ['./domov.component.css']
+  styleUrls: ['./domov.component.css'],
+  animations: [
+    trigger('bounceIn', [
+      transition(':enter', [
+        animate('0.8s ease-out', keyframes([
+          style({ transform: 'translateY(100%)', opacity: 0, offset: 0 }),
+          style({ transform: 'translateY(-15px)', opacity: 1, offset: 0.6 }),
+          style({ transform: 'translateY(0)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
 })
 export class DomovComponent implements OnInit {
   recipes: any[] = [];
-  imagesLoaded: number = 0;  // Track the number of loaded images
-  totalImages: number = 0;   // Total number of images
+  imagesLoaded: number = 0;
+  totalImages: number = 0;
+  isLoggedIn: boolean = false;  // Track login status
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    // Check login status
+    this.isLoggedIn = !!localStorage.getItem('userToken');  // Or use your authentication method to set this value
+
+    // Fetch the recipes from the backend API
     this.http.get<any[]>('http://localhost:3000/recepti').subscribe(
       (data) => {
         console.log('Fetched recipes:', data);
         this.recipes = data;
-        this.totalImages = data.length;  // Set total images to the number of recipes
+        this.totalImages = data.length;
       },
       (error) => {
         console.error('Error fetching recipes:', error);
-
-        // Optional: fallback dummy data for development
         this.recipes = [
           {
             id: 1,
@@ -35,22 +56,20 @@ export class DomovComponent implements OnInit {
             slika: null
           }
         ];
-        this.totalImages = 1;  // Handle fallback case
+        this.totalImages = 1;
       }
     );
   }
 
   imageLoaded(): void {
-    this.imagesLoaded++;  // Increment the counter when an image is loaded
+    this.imagesLoaded++;
     if (this.imagesLoaded === this.totalImages) {
-      this.allImagesLoaded();  // All images are loaded
+      this.allImagesLoaded();
     }
   }
 
   allImagesLoaded(): void {
     console.log('All images have been loaded');
-    // You can now perform any additional actions after images are loaded.
-    // For example, enable a button or show some content.
   }
 
   deleteRecipe(id: number): void {
