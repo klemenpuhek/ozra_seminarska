@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div *ngFor="let recipe of recipes" class="col-md-4 mb-4" @bounceIn>
-      <div class="card shadow">
+      <div class="card shadow ">
         <div class="image-container">
           <img [src]="recipe.slika ? 'http://localhost:3000' + recipe.slika : 'assets/default-image.jpg'" 
                alt="{{ recipe.imeRecepta }}" 
@@ -11,10 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ recipe.imeRecepta }}</h5>
           <div class="btn-group d-flex justify-content-between mb-3">
-            <!-- Always show "Prikaži cel recept" -->
             <a [routerLink]="['/recepti', recipe.id]" class="btn btn-recept">Prikaži cel recept</a>
-
-            <!-- Only show "Uredi recept" and "Zbriši recept" if the user is logged in -->
             <a *ngIf="isLoggedIn" [routerLink]="['/uredi', recipe.id]" class="btn btn-uredi">Uredi recept</a>
             <button *ngIf="isLoggedIn" (click)="deleteRecipe(recipe.id)" class="btn btn-zbrisi">Zbriši recept</button>
           </div>
