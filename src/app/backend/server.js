@@ -4,33 +4,29 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 
-// Initialize app
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Enable CORS for Angular frontend
 app.use(cors({
   origin: 'http://localhost:4200',
   methods: 'GET, POST, PUT, DELETE',
   allowedHeaders: 'Content-Type, Authorization'
 }));
 
-// Multer for file uploads
 const upload = multer({ dest: 'uploads/' });
-
-// Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// SQLite database
+
+
 const db = new sqlite3.Database('./mydb.sqlite', (err) => {
   if (err) console.error(err.message);
   else console.log('Connected to SQLite DB.');
 });
 
-// Create recepti table
+
+
 db.run(`CREATE TABLE IF NOT EXISTS recepti (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   imeRecepta TEXT NOT NULL,
@@ -41,14 +37,13 @@ db.run(`CREATE TABLE IF NOT EXISTS recepti (
   slika TEXT
 )`);
 
-// Create users table
 db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL
 )`);
 
-// Register user endpoint
+
 app.post('/register', (req, res) => {
   const { email, password } = req.body;
 
@@ -85,12 +80,10 @@ app.post('/login', express.json(), (req, res) => {
       return res.status(401).json({ error: 'Napačen email ali geslo.' });
     }
 
-    // Successful login
     res.status(200).json({ message: 'Prijava uspešna', userId: row.id });
   });
 });
 
-// Add recipe
 app.post('/recepti', upload.single('slika'), (req, res) => {
   const { imeRecepta, casPriprave, tezavnost, sestavine, opis } = req.body;
   const slikaPath = req.file ? `/uploads/${req.file.filename}` : null;
@@ -109,7 +102,7 @@ app.post('/recepti', upload.single('slika'), (req, res) => {
   );
 });
 
-// Get all recipes
+
 app.get('/recepti', (req, res) => {
   db.all('SELECT * FROM recepti', (err, rows) => {
     if (err) {
@@ -120,7 +113,6 @@ app.get('/recepti', (req, res) => {
   });
 });
 
-// Get single recipe by ID
 app.get('/recepti/:id', (req, res) => {
   const recipeId = req.params.id;
 
@@ -138,7 +130,7 @@ app.get('/recepti/:id', (req, res) => {
   });
 });
 
-// Delete recipe
+
 app.delete('/recepti/:id', (req, res) => {
   const { id } = req.params;
 
@@ -156,7 +148,6 @@ app.delete('/recepti/:id', (req, res) => {
   });
 });
 
-// Update recipe
 app.put('/recepti/:id', upload.single('slika'), (req, res) => {
   const { id } = req.params;
   const { imeRecepta, casPriprave, tezavnost, sestavine, opis } = req.body;
@@ -180,7 +171,7 @@ app.put('/recepti/:id', upload.single('slika'), (req, res) => {
   );
 });
 
-// Start the server
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

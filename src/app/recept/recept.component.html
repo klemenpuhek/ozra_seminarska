@@ -19,7 +19,6 @@
     </div>
 
     <div class="col-md-6">
-      <!-- Show the loading spinner until the image is loaded -->
       <div *ngIf="!imageLoaded" class="loading-spinner">Loading image...</div>
       <img *ngIf="recipe?.slika" 
            [src]="'http://localhost:3000' + recipe?.slika" 

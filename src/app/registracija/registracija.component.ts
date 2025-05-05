@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registracija',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // Include RouterModule
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './registracija.component.html',
   styleUrls: ['./registracija.component.css']
 })
@@ -40,11 +40,11 @@ export class RegistracijaComponent {
     this.http.post('http://localhost:3000/register', user).subscribe({
       next: (response: any) => {
         this.successMessage = 'Registracija uspešna! Preusmerjanje...';
-        localStorage.setItem('userToken', response.token); // Save the token after registration
+        localStorage.setItem('userToken', response.token);
         setTimeout(() => this.router.navigate(['/prijava']), 1500);
       },
       error: (error) => {
-        console.error('Full registration error:', error); // ✅ Help debug in console
+        console.error('Full registration error:', error);
         this.errorMessage = error.error?.error || 'Napaka pri registraciji.';
       }
     });
